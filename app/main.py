@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import List
 import random
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 app = FastAPI()
 origins = ["*"]
@@ -53,3 +54,6 @@ def rank_crops(request: CropRequest) -> List[CropRankingResponse]:
     ]
     ranked_crops.sort(key=lambda x: x.score, reverse=True)
     return ranked_crops
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
